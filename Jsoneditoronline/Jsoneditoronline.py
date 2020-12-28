@@ -21,6 +21,10 @@ class Jsoneditoronline:
 
   #New document
   ###########################################
+  #Example:
+  # Js = Jsoneditoronline()
+  # Js.new(name="COMENTARIOS", [1670758] )
+  #Return: id
   def new(self, title="", data={}):
     js = json.dumps(data).replace('"', '\\"')
     data = '{"name":"Test","schema":{"type":"NONE","url":null,"id":null,"content":null,"leftPanel":false,"rightPanel":false},"updated":"' + datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]+"Z" + '","data":"'+js+'"}'
@@ -37,6 +41,9 @@ class Jsoneditoronline:
 
   #Update document
   ###########################################
+  #Example:
+  # Js = Jsoneditoronline()
+  # Js.update(id="460fab2fb5954f9aac5ca9867c8c0e4b", data=[999,3, {'pp':1}])
   def update(self, id="", data={}):
     js = json.dumps(data).replace('"', '\\"')
     data = '{"name":"Test","schema":{"type":"NONE","url":null,"id":null,"content":null,"leftPanel":false,"rightPanel":false},"updated":"' + datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]+"Z" + '","data":"'+js+'"}'
@@ -51,6 +58,9 @@ class Jsoneditoronline:
 
   #Select document
   ###########################################
+  #Example:
+  # Js = Jsoneditoronline()
+  # Js.select(id="b92c59768fa0449781a456f2e26497d3")
   def select(self, id="" ):
     response = requests.get('https://jsoneditoronline.herokuapp.com/v1/docs/'   +  id, headers=self.headers )
     return json.loads(response.content)['data']
