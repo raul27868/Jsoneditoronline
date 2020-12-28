@@ -1,11 +1,12 @@
 import json
 import datetime
 import requests
+
 class Jsoneditoronline:
-  def __init__(self ): 
+  def __init__(self, id=None ): 
     self.title = None
     self.data = None
-    self.id = None
+    self.id = id
     self.headers = {
         'Connection': 'keep-alive',
         'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36',
@@ -18,6 +19,18 @@ class Jsoneditoronline:
         'Referer': 'https://jsoneditoronline.org/',
         'Accept-Language': 'es-ES,es;q=0.9,und;q=0.8,en;q=0.7',
     }
+    if self.id:
+      response = self._get( self.id)
+      self.title = json.loads(response.content)['name']
+      self.data = json.loads(response.content)['data']
+
+
+  #Get all data for id
+  ###########################################
+  def _get(self, id):
+    response = requests.get('https://jsoneditoronline.herokuapp.com/v1/docs/'   +    id, headers=self.headers )
+    return response
+
 
   #New document
   ###########################################
@@ -61,5 +74,5 @@ class Jsoneditoronline:
   # Js = Jsoneditoronline()
   # Js.select(id="b92c59768fa0449781a456f2e26497d3")
   def select(self  ):
-    response = requests.get('https://jsoneditoronline.herokuapp.com/v1/docs/'   +  self.id, headers=self.headers )
+    response = self._get( self.id)
     return json.loads(response.content)['data']
