@@ -13,7 +13,7 @@ setup(
     author_email='raul.reyero.diez@gmail.com',
     description='Api for https://jsoneditoronline.org',
     packages=find_packages(),    
-    install_requires=['requests >= 1.0', 'datetime >= 1.0', 'json >= 1.0' ],
+    install_requires=['requests >= 1.0', 'datetime >= 1.0', 'json  ' ],
 )
  
 
