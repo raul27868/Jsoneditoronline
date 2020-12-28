@@ -21,8 +21,8 @@ class Jsoneditoronline:
   #New document
   ###########################################
   def new(self, title="", data={}):
-    import json
-    js = json.dumps(data).replace('"', '\\"')
+    #js = json.dumps(data).replace('"', '\\"')
+    
     data = '{"name":"Test","schema":{"type":"NONE","url":null,"id":null,"content":null,"leftPanel":false,"rightPanel":false},"updated":"' + datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]+"Z" + '","data":"'+js+'"}'
     response = requests.post('https://jsoneditoronline.herokuapp.com/v1/docs', headers=self.headers, data=data)
 
