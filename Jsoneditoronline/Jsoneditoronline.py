@@ -1,7 +1,6 @@
 import json
 import datetime
 import requests
-
 class Jsoneditoronline:
   def __init__(self ): 
     self.title = None
@@ -49,3 +48,9 @@ class Jsoneditoronline:
      
     return json.loads(response.content)
 
+
+  #Select document
+  ###########################################
+  def select(self, id="" ):
+    response = requests.get('https://jsoneditoronline.herokuapp.com/v1/docs/'   +  id, headers=self.headers )
+    return json.loads(response.content)['data']
