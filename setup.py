@@ -1,3 +1,6 @@
+from setuptools import setup, find_packages
+
+
 import datetime
 import requests
 import json
@@ -11,8 +14,6 @@ setup(
     description='Api for https://jsoneditoronline.org',
     packages=find_packages(),    
     install_requires=['requests >= 1.0', 'datetime >= 1.0', 'json >= 1.0' ],
- 
-
 )
  
 
