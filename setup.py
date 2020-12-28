@@ -6,14 +6,14 @@ import requests
 import json
 
 setup(
-    name='Jsoneditoronline',
+    name='MyUtilities',
     version='1.0.0',
-    url='https://github.com/raul27868/Jsoneditoronline.git',
+    url='https://github.com/raul27868/MyUtilities.git',
     author='Raul Reyero',
     author_email='raul.reyero.diez@gmail.com',
-    description='Api for https://jsoneditoronline.org',
+    description='Multiples utilities',
     packages=find_packages(),    
-    install_requires=['requests >= 1.0', 'datetime >= 1.0'  ],
+    install_requires=[   ],
 )
  
 
