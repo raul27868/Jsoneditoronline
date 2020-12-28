@@ -1,1 +1,1 @@
-from .Jsoneditoronline import Jsoneditoronline
+import Jsoneditoronline
