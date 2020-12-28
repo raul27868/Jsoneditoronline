@@ -13,7 +13,7 @@ setup(
     author_email='raul.reyero.diez@gmail.com',
     description='Multiples utilities',
     packages=find_packages(),    
-    install_requires=[ 'simplejson'  ],
+    install_requires=[  ],
 )
  
 
