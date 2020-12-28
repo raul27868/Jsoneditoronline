@@ -2,19 +2,17 @@ import requests
 import datetime
 import json
 
-# Package meta-data.
-NAME = 'Jsoneditoronline'
-DESCRIPTION = 'Api for https://jsoneditoronline.org/'
-URL = 'https://github.com/raul27868/Jsoneditoronline'
-EMAIL = 'raul.reyero.diez@gmail.es'
-AUTHOR = 'Raul Reyero'
-REQUIRES_PYTHON = '>=3.6.0'
-VERSION = '0.1.0'
-
-# What packages are required for this module to be executed?
-REQUIRED = [
-    # 'requests', 'datetime', 'json',
-]
+setup(
+    name='Jsoneditoronline',
+    version='1.0.0',
+    url='https://github.com/raul27868/Jsoneditoronline.git',
+    author='Raul Reyero',
+    author_email='raul.reyero.diez@gmail.com',
+    description='Api for https://jsoneditoronline.org',
+    packages=find_packages(),    
+    install_requires=['requests', 'datetime', 'json' ],
+)
+ 
 
 
 class Jsoneditoronline:
