@@ -7,7 +7,7 @@ class Jsoneditoronline:
     self.title = None
     self.data = None
     self.id = id
-    self.headers = {
+    self._headers = {
         'Connection': 'keep-alive',
         'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36',
         'Content-Type': 'application/json',
@@ -22,13 +22,13 @@ class Jsoneditoronline:
     if self.id:
       response = self._get( self.id)
       self.title = json.loads(response.content)['name']
-      self.data = json.loads(response.content)['data']
+      self.data = json.loads(json.loads(response.content)['data'])
 
 
   #Get all data for id
   ###########################################
   def _get(self, id):
-    response = requests.get('https://jsoneditoronline.herokuapp.com/v1/docs/'   +    id, headers=self.headers )
+    response = requests.get('https://jsoneditoronline.herokuapp.com/v1/docs/'   +    id, headers=self._headers )
     return response
 
 
@@ -40,16 +40,15 @@ class Jsoneditoronline:
   #Return: id
   def new(self, title="", data={}):
     js = json.dumps(data).replace('"', '\\"')
-    data = '{"name":"Test","schema":{"type":"NONE","url":null,"id":null,"content":null,"leftPanel":false,"rightPanel":false},"updated":"' + datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]+"Z" + '","data":"'+js+'"}'
-    response = requests.post('https://jsoneditoronline.herokuapp.com/v1/docs', headers=self.headers, data=data)
+    param = '{"name":"'+title+'","schema":{"type":"NONE","url":null,"id":null,"content":null,"leftPanel":false,"rightPanel":false},"updated":"' + datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]+"Z" + '","data":"'+js+'"}'
+    response = requests.post('https://jsoneditoronline.herokuapp.com/v1/docs', headers=self._headers, data=param)
 
-    self.id = data
     if json.loads(response.content)['ok'] == True:
       self.title = title
       self.data = data
       self.id = json.loads(response.content)['id']
 
-    return json.loads(response.content)
+    return {**json.loads(response.content), **{'data': self.data } }
 
 
   #Update document
@@ -57,15 +56,17 @@ class Jsoneditoronline:
   #Example:
   # Js = Jsoneditoronline()
   # Js.update(data=[999,3, {'pp':1}])
-  def update(self, id="", data={}):
+  def update(self,  *argv   ):
+    data = argv[0] if argv else self.data
+
     js = json.dumps(data).replace('"', '\\"')
-    data = '{"name":"'+self.title + '", "updated":"'+datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]+"Z"+'","_id":"'+self.id+'","data":"'+js+'"}'
+    param = '{"name":"'+self.title + '", "updated":"'+datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]+"Z"+'","_id":"'+self.id+'","data":"'+js+'"}'
     
-    response = requests.put('https://jsoneditoronline.herokuapp.com/v1/docs/' +self.id, headers=self.headers, data=data)
+    response = requests.put('https://jsoneditoronline.herokuapp.com/v1/docs/' +self.id, headers=self._headers, data=param)
     if json.loads(response.content)['ok'] == True:
       self.data = data
      
-    return json.loads(response.content)
+    return {**json.loads(response.content), **{'data': self.data } }
 
 
   #Select document
@@ -75,4 +76,4 @@ class Jsoneditoronline:
   # Js.select(id="b92c59768fa0449781a456f2e26497d3")
   def select(self  ):
     response = self._get( self.id)
-    return json.loads(response.content)['data']
+    return json.loads(json.loads(response.content)['data'])
